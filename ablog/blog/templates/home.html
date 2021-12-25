@@ -5,9 +5,20 @@
     {% for post in posts %}
         <h2><a href="{% url 'article_details' post.pk %}">{{ post.title }}</a></h2>
         <h2>{{ post.author}}</h2>
-        <small><a href="{% url 'update_post' post.pk %}"> (Edit) </a><a href="{% url 'delete_post' post.pk %}"> (Delete) </a></small>
-        
-        <p>{{ post.content }}</p>
+        <small>{{ post.date_posted}} - 
+            <a href="{% url 'category' post.category %}">{{ post.category}}</a>
+        </small>
+
+        {% if user.is_authenticated %}
+        <small>
+            <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+        </small>
+        <small>
+            <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+        </small>
+        {% endif %}
+
+        <p>{{ post.content|slice:":200" |safe}}</p>
     {% endfor %}
 
  {% endblock %}

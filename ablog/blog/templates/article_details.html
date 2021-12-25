@@ -7,9 +7,11 @@
 <h1> {{post.title}}</h1>
 <h2>{{ post.date_posted}}</h2><br/>
 <hr>
-<p> {{post.content}}</p>
+<p> {{post.content|safe}}</p>
 <br/><br/>
 <a href="{% url 'home' %}" class="btn btn-secondary">back</a>
+{% if user.is_authenticated %}
 <a href="{% url 'update_post' post.pk %}" class="btn btn-info">Edit</a>
+{% endif %}
 
 {% endblock %}
