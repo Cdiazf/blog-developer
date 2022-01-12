@@ -9,9 +9,15 @@
     <div class="form-group">
         <form method="POST">
             {% csrf_token %}
+            {{ form.media}}
             {{ form.as_p }}
             <button class="btn btn-secondary">Post</button>
     </div>
+<script>
+    var name ="{{user.id}}";
+    document.getElementById("id_author").value = name;
+</script>
+
 {% else %}
     <h1>Please Login</h1>
 {% endif %}

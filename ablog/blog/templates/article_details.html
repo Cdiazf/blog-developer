@@ -4,14 +4,48 @@
 
 {% block content %}
 
-<h1> {{post.title}}</h1>
-<h2>{{ post.date_posted}}</h2><br/>
-<hr>
-<p> {{post.content|safe}}</p>
-<br/><br/>
-<a href="{% url 'home' %}" class="btn btn-secondary">back</a>
-{% if user.is_authenticated %}
-<a href="{% url 'update_post' post.pk %}" class="btn btn-info">Edit</a>
-{% endif %}
+
+<header class="masthead" style="background-image: url('blog/assets/img/post-bg.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>{{post.title}}</h1>
+                    <h2 class="subheading text-capitalize" >{{ post.title_tag }}</h2>
+                    <span class="meta">
+                        Posted by
+                        <a href="#!" class="text-capitalize">{{ post.author.first_name  }}</a>
+                        {{ post.date_posted}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <p>
+                    {{ post.content |safe }}
+                </p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-sm-5 justify-content-center">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-sm">back</a>
+                {% if user.is_authenticated %}
+                    {% if user.id == post.author.id %}
+                    <a href="{% url 'update_post' post.pk %}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{% url 'delete_post' post.pk %}" class="btn btn-info btn-sm">Delete</a>
+                    {% endif %}
+                {% endif %} 
+        </div>
+                
+    </div>
+</article>
+
+
+
 
 {% endblock %}
